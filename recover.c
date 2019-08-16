@@ -10,4 +10,9 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    //filenames
+    char *imagefile = argv[1];
+
+    //open input file
+    FILE *inptr = fopen(imagefile,"r");
 }
