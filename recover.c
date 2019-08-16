@@ -4,9 +4,10 @@
 
 int main(int argc, char *argv[])
 {
+    //Error code incase the number of command line argument is not two
     if(argc != 2)
     {
-        fprintf("Usage: recover card\n");
+        fprintf(stderr,"Usage: recover card\n");
         return 0;
     }
 
@@ -15,4 +16,11 @@ int main(int argc, char *argv[])
 
     //open input file
     FILE *inptr = fopen(imagefile,"r");
+
+    //Error code incase file doesn't exist
+    if( imagefile == NULL)
+    {
+        fprintf(stderr, "Could not open file\n");
+        return 1;
+    }
 }
