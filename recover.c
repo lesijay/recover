@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     //Error code incase the number of command line argument is not two
-    if(argc != 2)
+    if (argc != 2)
     {
         fprintf(stderr,"Usage: recover card\n");
         return 1;
@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
 
 
     //open input file
-    FILE *inptr = fopen(imagefile,"r");
+    FILE *inptr = fopen(imagefile, "r");
 
     //Error code incase file doesn't exist
-    if( inptr == NULL)
+    if (inptr == NULL)
     {
         fprintf(stderr, "Could not open file\n");
         return 2;
@@ -38,16 +38,17 @@ int main(int argc, char *argv[])
     //open an output file pointer
     FILE *outptr;
     //loop through the memory card file until end of file
-    while((fread(buffer, 512, 1, inptr) != 0))
+    while ((fread(buffer, 512, 1, inptr) != 0))
     {
         // identify a jpeg file
-        if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
+        if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
             //closes the former outpointer if a new JPEG header has been found
             if (jpegStarted)
             {
                 fclose(outptr);
-            }else
+            }
+            else
             {
                 jpegStarted = true; //Resets condition to continue writing the following JPEG image blocks  
             }
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
             }
             
             //open the outptr file for writing
-            outptr = fopen(fileName,"w");
+            outptr = fopen(fileName, "w");
 
             //Print an error message 
             if (outptr == NULL)
@@ -79,7 +80,7 @@ int main(int argc, char *argv[])
 
         }
         //After identifying a JPEG image,write each block of it into the outfile from the buffer
-        if(jpegStarted)
+        if (jpegStarted)
         {
             fwrite(&buffer, 512, 1, outptr);
         }
