@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
     //filenames
     char *imagefile = argv[1];
 
+    //intitialazes a variable to check if a jpeg file has started 
+    bool jpegStarted = false;
+
     //open input file
     FILE *inptr = fopen(imagefile,"r");
 
@@ -36,6 +39,14 @@ int main(int argc, char *argv[])
     {
         // identify a jpeg file
         if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[3] == 0xff && (buffer[3] & 0xf0) == 0xe0)
+        {
+
+        }
+        //After identifying a JPEG image,write each block of it into the outfile from the buffer
+        if(jpegStarted)
+        {
+            fwrite(&buffer, 512, 1, outptr);
+        }
 
     }
     //closes the input file and output file after getting to the end of file
