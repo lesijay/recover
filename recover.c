@@ -50,9 +50,15 @@ int main(int argc, char *argv[])
             }else{
                 jpegStarted = true; //Resets condition to continue writing the following JPEG image blocks  
             }
+
             //store the name of the jpeg file,assume it is a string of 4 characters
             char fileName[4];
             sprintf(fileName, "00%i.jpg", imgRecovered);  //instead of printing to the console, it returns a formatted string
+
+            //open the outptr file for writing
+            outptr = fopen(fileName,"w");
+
+
         }
         //After identifying a JPEG image,write each block of it into the outfile from the buffer
         if(jpegStarted)
