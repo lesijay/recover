@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
     //loop through the memory card file until end of file
     while((fread(buffer, 512, 1, inptr) != 0))
     {
+        // identify a jpeg file
+        if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[3] == 0xff && (buffer[3] & 0xf0) == 0xe0)
 
     }
     //closes the input file and output file after getting to the end of file
