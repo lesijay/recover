@@ -17,6 +17,9 @@ int main(int argc, char *argv[])
     //intialize a variable to check if a jpeg file has been found
     bool jpegStarted = false;
 
+    //initialize a variable for recovered images
+    int imgRecovered = 0;
+
     //open input file
     FILE *inptr = fopen(imagefile,"r");
 
@@ -40,13 +43,16 @@ int main(int argc, char *argv[])
         // identify a jpeg file
         if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[3] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
-            //closes the outpointer if a new JPEG header has been found
+            //closes the former outpointer if a new JPEG header has been found
             if (jpegStarted)
             {
                 fclose(outptr);
             }else{
                 jpegStarted = true; //Resets condition to continue writing the following JPEG image blocks  
             }
+            //store the name of the jpeg file,assume it is a string of 4 characters
+            char fileName[4];
+            sprintf(fileName, "00%i.jpg", imgRecovered);  //instead of printing to the console, it returns a formatted string
         }
         //After identifying a JPEG image,write each block of it into the outfile from the buffer
         if(jpegStarted)
