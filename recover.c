@@ -31,6 +31,11 @@ int main(int argc, char *argv[])
 
     //open an output file pointer
     FILE *outptr;
+    //loop through the memory card file until end of file
+    while((fread(buffer, 512, 1, inptr) != 0))
+    {
+
+    }
 
 
 }
