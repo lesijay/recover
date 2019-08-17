@@ -25,8 +25,12 @@ int main(int argc, char *argv[])
     }
 
 
-    //Declare an array of size of 512 bytes to store 1 block of a JPEG file
+    //Declare an array of size of 512 bytes to store 1 block of a memory card
     unsigned char buffer[512]; // data type of unsigned char is used because it can store 1byte(256) all positive integers
+
+
+    //open an output file pointer
+    FILE *outptr;
 
 
 }
