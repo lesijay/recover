@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cs50.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,10 @@ int main(int argc, char *argv[])
     //initialize a variable for recovered images
     int imgRecovered = 0;
 
+    //Declare an array of size of 512 bytes to store 1 block of a memory card
+    unsigned char buffer[512]; // data type of unsigned char is used because it can store 1byte(256) all positive integers
+
+
     //open input file
     FILE *inptr = fopen(imagefile,"r");
 
@@ -30,24 +35,20 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-
-    //Declare an array of size of 512 bytes to store 1 block of a memory card
-    unsigned char buffer[512]; // data type of unsigned char is used because it can store 1byte(256) all positive integers
-
-
     //open an output file pointer
     FILE *outptr;
     //loop through the memory card file until end of file
     while((fread(buffer, 512, 1, inptr) != 0))
     {
         // identify a jpeg file
-        if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[3] == 0xff && (buffer[3] & 0xf0) == 0xe0)
+        if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
             //closes the former outpointer if a new JPEG header has been found
             if (jpegStarted)
             {
                 fclose(outptr);
-            }else{
+            }else
+            {
                 jpegStarted = true; //Resets condition to continue writing the following JPEG image blocks  
             }
 
@@ -66,7 +67,8 @@ int main(int argc, char *argv[])
                 return 3;
             }
 
-
+            //increment the number of images recovered
+            imgRecovered++;
 
         }
         //After identifying a JPEG image,write each block of it into the outfile from the buffer
