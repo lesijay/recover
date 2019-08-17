@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     //filenames
     char *imagefile = argv[1];
 
-    //intitialazes a variable to check if a jpeg file has started 
+    //intialize a variable to check if a jpeg file has been found
     bool jpegStarted = false;
 
     //open input file
@@ -40,7 +40,13 @@ int main(int argc, char *argv[])
         // identify a jpeg file
         if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[3] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
-
+            //closes the outpointer if a new JPEG header has been found
+            if (jpegStarted)
+            {
+                fclose(outptr);
+            }else{
+                jpegStarted = true; //Resets condition to continue writing the following JPEG image blocks  
+            }
         }
         //After identifying a JPEG image,write each block of it into the outfile from the buffer
         if(jpegStarted)
