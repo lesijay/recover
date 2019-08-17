@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     if(argc != 2)
     {
         fprintf(stderr,"Usage: recover card\n");
-        return 0;
+        return 1;
     }
 
     //filenames
@@ -29,10 +29,10 @@ int main(int argc, char *argv[])
     FILE *inptr = fopen(imagefile,"r");
 
     //Error code incase file doesn't exist
-    if( imagefile == NULL)
+    if( inptr == NULL)
     {
         fprintf(stderr, "Could not open file\n");
-        return 1;
+        return 2;
     }
 
     //open an output file pointer
@@ -54,8 +54,15 @@ int main(int argc, char *argv[])
 
             //store the name of the jpeg file,assume it is a string of 4 characters
             char fileName[4];
-            sprintf(fileName, "00%i.jpg", imgRecovered);  //instead of printing to the console, it returns a formatted string
-
+            if (imgRecovered < 10)
+            {
+                sprintf(fileName, "00%i.jpg", imgRecovered);  //instead of printing to the console, it returns a formatted string
+            }
+            else
+            {
+                sprintf(fileName, "0%i.jpg", imgRecovered);
+            }
+            
             //open the outptr file for writing
             outptr = fopen(fileName,"w");
 
