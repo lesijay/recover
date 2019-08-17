@@ -58,6 +58,15 @@ int main(int argc, char *argv[])
             //open the outptr file for writing
             outptr = fopen(fileName,"w");
 
+            //Print an error message 
+            if (outptr == NULL)
+            {
+                fclose(inptr);
+                fprintf(stderr, "Could not create %s.\n", fileName);
+                return 3;
+            }
+
+
 
         }
         //After identifying a JPEG image,write each block of it into the outfile from the buffer
