@@ -36,6 +36,10 @@ int main(int argc, char *argv[])
     {
 
     }
+    //closes the input file and output file after getting to the end of file
+    fclose(outptr);
+
+    fclose(inptr);
 
 
 }
